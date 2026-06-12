@@ -118,8 +118,8 @@ async function fetchSpreadsheetData() {
             
             rawData.push({
                 date: row[0].trim(),                     // A欄：日期（如：5月19日）
-                daily: parseInt(row[1].replace(/,/g, '')) || 0, // B欄：每日收聽量
-                total: parseInt(row[2].replace(/,/g, '')) || 0  // C欄：總累積收聽量
+                daily: parseInt(row[2].replace(/,/g, '')) || 0, // B欄：每日收聽量
+                total: parseInt(row[1].replace(/,/g, '')) || 0  // C欄：總累積收聽量
             });
         }
 
