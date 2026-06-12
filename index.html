@@ -369,14 +369,16 @@ function renderChart(days) {
                 yDaily: {
                     type: 'linear',
                     position: 'left',
-                    title: { display: true, text: '收聽 / 帳號數', color: '#aaa' },
+                    title: { display: true, text: '收聽 / 帳號數', color: '#aaa' , 
+    rotation: 0,},
                     ticks: { color: '#aaa', callback: val => val.toLocaleString() },
                     grid: { color: '#333' }
                 },
                 yTotal: {
                     type: 'linear',
                     position: 'right',
-                    title: { display: true, text: '累積總收聽', color: '#aaa' },
+                    title: { display: true, text: '累積總收聽', color: '#aaa', 
+    rotation: 0 },
                     ticks: { color: '#aaa', callback: val => val.toLocaleString() },
                     grid: { drawOnChartArea: false }
                 },
