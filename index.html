@@ -64,23 +64,26 @@
     .chart-title { font-size: 14px; }
     .btn { padding: 4px 8px; font-size: 10px; }
 }
+
 .orientation-warning {
     display: none;
 }
 
-/* 觸發條件：當螢幕寬度小於 768px（手機裝置），且處於直向（portrait）時 */
-@media screen and (max-width: 768px) and (orientation: portrait) {
+/* 只要是直螢幕（Portrait），不限螢幕寬度，一律顯示 */
+@media screen and (orientation: portrait) {
     .orientation-warning {
-        display: flex;
+        display: flex !important; /* 強制覆蓋其他 display 設定 */
         align-items: center;
         justify-content: center;
-        background: rgba(18, 18, 18, 0.95); /* 深色半透明背景，呼叫您的暗黑模式 */
-        border: 1px solid #00cd3c; /* 使用您按鈕的經典綠色做邊框 */
+        background: rgba(30, 30, 30, 0.95); /* 深灰色背景 */
+        border: 2px solid #00cd3c; /* 經典亮綠色邊框 */
         border-radius: 12px;
         padding: 15px;
-        margin-bottom: 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-        animation: pulse 2s infinite; /* 增加輕微的呼吸燈特效吸引注意 */
+        margin: 10px 0 20px 0; /* 讓它與下方的 card 有點距離 */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        animation: pulse 2s infinite;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .warning-content {
@@ -90,32 +93,33 @@
     }
 
     .warning-icon {
-        font-size: 24px;
-        animation: spin 4s linear infinite; /* 讓箭頭圖示自己慢慢轉動 */
+        font-size: 22px;
+        animation: spin 4s linear infinite;
+        display: inline-block;
     }
 
     .warning-content p {
         margin: 0;
-        color: #fff;
+        color: #ffffff;
         font-size: 14px;
-        line-height: 1.4;
+        line-height: 1.5;
     }
     
     .warning-content b {
-        color: #00cd3c; /* 強調「橫螢幕」字眼 */
+        color: #00cd3c;
     }
 }
 
-/* 動態特效：旋轉與呼吸燈 */
+/* 動態特效 */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(-360deg); }
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); }
-    50% { box-shadow: 0 4px 20px rgba(0, 205, 60, 0.5); }
-    100% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); }
+    0% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
+    50% { box-shadow: 0 4px 20px rgba(0, 205, 60, 0.6); border-color: rgba(0, 205, 60, 1); }
+    100% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
 }
         .song-info h2 {
     margin: 0 0 5px 0;
