@@ -14,7 +14,7 @@
             margin: 0;
             padding: 20px;
         }
-<div id="rotateWarning" class="orientation-warning" style="display: none;">
+<div id="rotateWarning" class="orientation-warning">
     <div class="warning-content">
         <span class="warning-icon">📱🔄</span>
         <p>為了獲得最佳的圖表觀測體驗，建議將手機旋轉為<b>橫螢幕</b>觀看唷！</p>
@@ -66,11 +66,7 @@
 }
 
 .orientation-warning {
-    display: none;
-}
-
-/* 旋轉提示的基本樣式 */
-.orientation-warning {
+    display: none; /* 【修正】預設在桌機與橫螢幕時隱藏，避免破版 */
     align-items: center;
     justify-content: center;
     background: rgba(30, 30, 30, 0.95); /* 深灰色背景 */
@@ -82,6 +78,13 @@
     animation: pulse 2s infinite;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* 【新增】關鍵核心：只有在「寬度 1024px 以下（手機平板）」且「直螢幕 (portrait)」時，提示才會強制變成 flex 顯示 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    .orientation-warning {
+        display: flex !important;
+    }
 }
 
 .warning-content {
@@ -117,9 +120,7 @@
     0% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
     50% { box-shadow: 0 4px 20px rgba(0, 205, 60, 0.6); border-color: rgba(0, 205, 60, 1); }
     100% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
-}
-
-        .song-info h2 {
+}        .song-info h2 {
     margin: 0 0 5px 0;
     font-size: 24px;
 }
@@ -603,30 +604,6 @@ function updatePeriod(days) {
 }
 // 啟動流程
 init();
-
-// 自動偵測手機螢幕方向的函數
-function checkOrientation() {
-    const warningEl = document.getElementById('rotateWarning');
-    if (!warningEl) return;
-
-    // 1. 先判斷是不是手機/平板裝置 (寬度小於 1024px)
-    const isMobile = window.innerWidth <= 1024;
-    
-    // 2. 判斷是否為直螢幕 (高度大於寬度)
-    const isPortrait = window.innerHeight > window.innerWidth;
-
-    // 如果同時是小螢幕（手機）又是直螢幕，就強制顯示；否則隱藏
-    if (isMobile && isPortrait) {
-        warningEl.style.display = 'flex';
-    } else {
-        warningEl.style.display = 'none';
-    }
-}
-
-// 頁面進場載入時檢查一次
-window.addEventListener('DOMContentLoaded', checkOrientation);
-// 手機轉向或視窗大小改變時，即時再次檢查
-window.addEventListener('resize', checkOrientation);
 
 </script>
 </body>
