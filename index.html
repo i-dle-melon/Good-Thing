@@ -202,6 +202,16 @@ async function init() {
         if (uploadBlock) uploadBlock.style.display = 'none';
         await fetchSpreadsheetData();
     }
+updatePeriod(14); 
+    
+    // 2. 同步更新按鈕樣式（移除全部按鈕的 active，給 14 天按鈕加上 active）
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.innerText.includes('14天')) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 // 邏輯 A：抓取 Google 試算表 (CSV)
@@ -340,13 +350,13 @@ function updateDashboard() {
         }
 
         // 5. 渲染圖表
-        renderChart(0);
+        renderChart(14);
     } else {
         if (isLocalFile) alert("未能成功解析數據，請確認 Excel 欄位順序是否為 A~F 欄。");
     }
 }
 
-function renderChart(days) {
+function renderChart(days= 14) {
     if (rawData.length === 0) return;
     
     const displayData = days === 0 ? rawData : rawData.slice(-days);
@@ -511,8 +521,23 @@ trendChart.data.datasets.forEach((dataset, index) => {
 
 function updatePeriod(days) {
     const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    if (event && event.target) event.target.classList.add('active');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // 2. 如果是手動點擊，將 active 樣式加在觸發事件的那個按鈕上
+    if (event && event.target) {
+        event.target.classList.add('active');
+    } else {
+        // 如果是初始化自動呼叫（沒有傳入 event），則手動找到 14 天的按鈕並加上 active
+        buttons.forEach(btn => {
+            if (btn.innerText.includes(days + '天')) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    // 3. 執行原本的渲染邏輯
     renderChart(days);
 }
 // 啟動流程
