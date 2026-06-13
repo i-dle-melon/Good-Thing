@@ -18,17 +18,45 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-        .song-card {
-            background: #1e1e1e; /* 改為深灰色 */
-            color: #fff;        /* 文字改為白色 */
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.15); /* 調整陰影 */
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap; /* 確保在小螢幕時也能自動適應 */
+        /* 修改原本的 .song-card，增加 flex-direction */
+.song-card {
+    background: #1e1e1e;
+    color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* 改為垂直排列 */
+    align-items: flex-start; /* 靠左對齊 */
+    gap: 20px;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: space-between; /* 均分空間 */
+    width: 100%; /* 確保撐滿寬度 */
+    gap: 10px;
+}
+
+/* 手機版響應式優化 */
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    
+    .song-card { padding: 15px; }
+    
+    .song-info h2 { font-size: 20px; }
+    
+    .stat-box {
+        text-align: center; /* 手機版改為置中更美觀 */
+    }
+    
+    .stat-box .value { font-size: 16px; }
+    .stat-box .label { font-size: 10px; }
+    
+    /* 隱藏圖表標題的長文字，避免破版 */
+    .chart-title { font-size: 14px; }
+    .btn { padding: 4px 8px; font-size: 10px; }
 }
         .song-info h2 {
     margin: 0 0 5px 0;
@@ -338,7 +366,7 @@ function renderChart(days) {
             labels: labels,
             datasets: [
                 {
-                    label: '每 日 收 聽 量 ',
+                    label: '每日收聽量 ',
                     data: dailyDataset,
                     borderColor: '#00cd3c',
                     backgroundColor: 'rgba(0, 205, 60, 0.05)',
@@ -347,7 +375,7 @@ function renderChart(days) {
                     fill: true
                 },
                 {
-                    label: '累 積 總 收 聽 量 ',
+                    label: '累積總收聽量 ',
                     data: totalDataset,
                     borderColor: '#4a90e2',
                     backgroundColor: 'transparent',
@@ -356,7 +384,7 @@ function renderChart(days) {
                     borderDash: [4, 4]
                 },
                 {
-                    label: '收 聽 量 增 減 ',
+                    label: '收聽量增減 ',
                     data: changeDataset,
                     borderColor: '#ff9f43',
                     backgroundColor: 'transparent',
@@ -364,7 +392,7 @@ function renderChart(days) {
                     tension: 0.3
                 },
                 {
-                    label: '每日切瓜號數量',
+                    label: '每日切瓜號數',
                     data: accountsDataset,
                     borderColor: '#9b59b6',
                     backgroundColor: 'transparent',
@@ -387,13 +415,20 @@ function renderChart(days) {
         options: {
             responsive: true,
             interaction: { mode: 'index', intersect: false },
+            elements: {
+        point: {
+            radius: 2,           // 正常狀態下的點半徑 (設為 0 可隱藏)
+            hoverRadius: 10,      // 滑鼠懸停時的點半徑 (調大這裡即可)
+            hoverBorderWidth: 2  // 滑鼠懸停時的邊框寬度
+        }
+    },
             scales: {
     yDaily: {
         type: 'linear',
         position: 'left',
         title: { 
             display: true, 
-            text: '收 聽 量 ＋ －                 /                 每 日 收 聽 量', 
+            text: '收 聽 量 ＋ － <<     /     >> 每 日 收 聽 量', 
             color: '#aaa', 
             rotation: 0,
             font: {
