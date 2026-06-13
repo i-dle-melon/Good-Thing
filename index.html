@@ -14,6 +14,12 @@
             margin: 0;
             padding: 20px;
         }
+<div class="orientation-warning">
+    <div class="warning-content">
+        <span class="warning-icon">📱🔄</span>
+        <p>為了獲得最佳的圖表觀測體驗，建議將手機旋轉為<b>橫螢幕</b>觀看唷！</p>
+    </div>
+</div>
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -57,6 +63,59 @@
     /* 隱藏圖表標題的長文字，避免破版 */
     .chart-title { font-size: 14px; }
     .btn { padding: 4px 8px; font-size: 10px; }
+}
+.orientation-warning {
+    display: none;
+}
+
+/* 觸發條件：當螢幕寬度小於 768px（手機裝置），且處於直向（portrait）時 */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    .orientation-warning {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(18, 18, 18, 0.95); /* 深色半透明背景，呼叫您的暗黑模式 */
+        border: 1px solid #00cd3c; /* 使用您按鈕的經典綠色做邊框 */
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        animation: pulse 2s infinite; /* 增加輕微的呼吸燈特效吸引注意 */
+    }
+
+    .warning-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .warning-icon {
+        font-size: 24px;
+        animation: spin 4s linear infinite; /* 讓箭頭圖示自己慢慢轉動 */
+    }
+
+    .warning-content p {
+        margin: 0;
+        color: #fff;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    .warning-content b {
+        color: #00cd3c; /* 強調「橫螢幕」字眼 */
+    }
+}
+
+/* 動態特效：旋轉與呼吸燈 */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); }
+    50% { box-shadow: 0 4px 20px rgba(0, 205, 60, 0.5); }
+    100% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); }
 }
         .song-info h2 {
     margin: 0 0 5px 0;
