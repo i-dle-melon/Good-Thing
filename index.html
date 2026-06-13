@@ -14,7 +14,7 @@
             margin: 0;
             padding: 20px;
         }
-<div class="orientation-warning">
+<div id="rotateWarning" class="orientation-warning" style="display: none;">
     <div class="warning-content">
         <span class="warning-icon">📱🔄</span>
         <p>為了獲得最佳的圖表觀測體驗，建議將手機旋轉為<b>橫螢幕</b>觀看唷！</p>
@@ -69,45 +69,42 @@
     display: none;
 }
 
-/* 只要是直螢幕（Portrait），不限螢幕寬度，一律顯示 */
-@media screen and (orientation: portrait) {
-    .orientation-warning {
-        display: flex !important; /* 強制覆蓋其他 display 設定 */
-        align-items: center;
-        justify-content: center;
-        background: rgba(30, 30, 30, 0.95); /* 深灰色背景 */
-        border: 2px solid #00cd3c; /* 經典亮綠色邊框 */
-        border-radius: 12px;
-        padding: 15px;
-        margin: 10px 0 20px 0; /* 讓它與下方的 card 有點距離 */
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-        animation: pulse 2s infinite;
-        width: 100%;
-        box-sizing: border-box;
-    }
+/* 旋轉提示的基本樣式 */
+.orientation-warning {
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 30, 30, 0.95); /* 深灰色背景 */
+    border: 2px solid #00cd3c; /* 經典亮綠色邊框 */
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0 20px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    animation: pulse 2s infinite;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-    .warning-content {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
+.warning-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-    .warning-icon {
-        font-size: 22px;
-        animation: spin 4s linear infinite;
-        display: inline-block;
-    }
+.warning-icon {
+    font-size: 22px;
+    animation: spin 4s linear infinite;
+    display: inline-block;
+}
 
-    .warning-content p {
-        margin: 0;
-        color: #ffffff;
-        font-size: 14px;
-        line-height: 1.5;
-    }
-    
-    .warning-content b {
-        color: #00cd3c;
-    }
+.warning-content p {
+    margin: 0;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.warning-content b {
+    color: #00cd3c;
 }
 
 /* 動態特效 */
@@ -121,6 +118,7 @@
     50% { box-shadow: 0 4px 20px rgba(0, 205, 60, 0.6); border-color: rgba(0, 205, 60, 1); }
     100% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
 }
+
         .song-info h2 {
     margin: 0 0 5px 0;
     font-size: 24px;
@@ -605,6 +603,31 @@ function updatePeriod(days) {
 }
 // 啟動流程
 init();
+
+// 自動偵測手機螢幕方向的函數
+function checkOrientation() {
+    const warningEl = document.getElementById('rotateWarning');
+    if (!warningEl) return;
+
+    // 1. 先判斷是不是手機/平板裝置 (寬度小於 1024px)
+    const isMobile = window.innerWidth <= 1024;
+    
+    // 2. 判斷是否為直螢幕 (高度大於寬度)
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    // 如果同時是小螢幕（手機）又是直螢幕，就強制顯示；否則隱藏
+    if (isMobile && isPortrait) {
+        warningEl.style.display = 'flex';
+    } else {
+        warningEl.style.display = 'none';
+    }
+}
+
+// 頁面進場載入時檢查一次
+window.addEventListener('DOMContentLoaded', checkOrientation);
+// 手機轉向或視窗大小改變時，即時再次檢查
+window.addEventListener('resize', checkOrientation);
+
 </script>
 </body>
 </html>
