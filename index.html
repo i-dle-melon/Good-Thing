@@ -80,13 +80,6 @@
     box-sizing: border-box;
 }
 
-/* 【新增】關鍵核心：只有在「寬度 1024px 以下（手機平板）」且「直螢幕 (portrait)」時，提示才會強制變成 flex 顯示 */
-@media screen and (max-width: 1024px) and (orientation: portrait) {
-    .orientation-warning {
-        display: flex !important;
-    }
-}
-
 .warning-content {
     display: flex;
     align-items: center;
@@ -186,6 +179,19 @@
             font-size: 12px;
         }
         .btn.active { background: #00cd3c; color: white; }
+/* 2. 獨立出來：只要偵測到是「手機或平板（預設寬度小於1024px）」且是「直螢幕」，就絕對強制顯示 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    .orientation-warning {
+        display: flex !important; /* 用 !important 確保不論前面怎麼寫，進場一律強制亮出來 */
+    }
+}
+
+/* 3. 只要轉成橫螢幕，就強制隱藏 */
+@media screen and (orientation: landscape) {
+    .orientation-warning {
+        display: none !important;
+    }
+}
     </style>
 </head>
 <body>
