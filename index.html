@@ -14,12 +14,7 @@
             margin: 0;
             padding: 20px;
         }
-<div id="rotateWarning" class="orientation-warning">
-    <div class="warning-content">
-        <span class="warning-icon">📱🔄</span>
-        <p>為了獲得最佳的圖表觀測體驗，建議將手機旋轉為<b>橫螢幕</b>觀看唷！</p>
-    </div>
-</div>
+
         .container {
             max-width: 1000px;
             margin: 0 auto;
@@ -128,65 +123,65 @@
         }
         .btn.active { background: #00cd3c; color: white; }
 
+/* 旋轉提示的基本樣式 */
 .orientation-warning {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(18, 18, 18, 0.95); /* 深色背景，帶有一點點透明感 */
-    z-index: 999999; /* 確保疊在全網頁的最上層，連 Chart 都壓不住它 */
-    
-    /* 核心修改：移除所有媒體查詢限制，直接強制以 Flex 彈性盒顯示 */
-    display: flex !important; 
-    justify-content: center;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    background: rgba(30, 30, 30, 0.95); /* 深灰色背景 */
+    border: 2px solid #00cd3c; /* 經典亮綠色邊框 */
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0 20px 0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    animation: pulse 2s infinite;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* 提示框內容物的細緻設計（綠色呼吸燈與圓角） */
 .warning-content {
-    background: #1e1e1e;
-    padding: 30px;
-    border-radius: 12px;
-    border: 2px solid #00cd3c; /* 經典經典綠色邊框 */
-    box-shadow: 0 0 20px rgba(0, 205, 60, 0.3);
-    max-width: 80%;
-    animation: pulse 2s infinite ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .warning-icon {
-    font-size: 48px;
-    display: block;
-    margin-bottom: 15px;
-    animation: spin 3s infinite linear;
+    font-size: 22px;
+    animation: spin 4s linear infinite;
+    display: inline-block;
 }
 
 .warning-content p {
-    color: #fff;
     margin: 0;
-    font-size: 16px;
-    line-height: 1.6;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .warning-content b {
     color: #00cd3c;
 }
 
-/* 動態特效：轉動圖示與呼吸燈 */
+/* 動態特效 */
 @keyframes spin {
     0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    100% { transform: rotate(-360deg); }
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 20px rgba(0, 205, 60, 0.2); }
-    50% { box-shadow: 0 0 30px rgba(0, 205, 60, 0.6); }
-    100% { box-shadow: 0 0 20px rgba(0, 205, 60, 0.2); }
+    0% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
+    50% { box-shadow: 0 4px 20px rgba(0, 205, 60, 0.6); border-color: rgba(0, 205, 60, 1); }
+    100% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
 }
     </style>
 </head>
 <body>
+
+<div id="rotateWarning" class="orientation-warning">
+    <div class="warning-content">
+        <span class="warning-icon">📱</span>
+        <p>為了獲得最佳的圖表使用體驗，建議將手機旋轉為<b>橫螢幕</b>觀看唷！</p>
+    </div>
+</div>
 
 <div class="container">
 
@@ -551,7 +546,7 @@ function renderChart(days= 14) {
                     ticks: { color: '#aaa' },
                     grid: { color: '#333' }
                 }
-            },
+            }
 }
         
     });
@@ -604,6 +599,30 @@ function updatePeriod(days) {
 }
 // 啟動流程
 init();
+
+// 自動偵測手機螢幕方向的函數
+function checkOrientation() {
+    const warningEl = document.getElementById('rotateWarning');
+    if (!warningEl) return;
+
+    // 1. 先判斷是不是手機/平板裝置 (寬度小於 1024px)
+    const isMobile = window.innerWidth <= 1024;
+    
+    // 2. 判斷是否為直螢幕 (高度大於寬度)
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    // 如果同時是小螢幕（手機）又是直螢幕，就強制顯示；否則隱藏
+    if (isMobile && isPortrait) {
+        warningEl.style.display = 'flex';
+    } else {
+        warningEl.style.display = 'none';
+    }
+}
+
+// 頁面進場載入時檢查一次
+window.addEventListener('DOMContentLoaded', checkOrientation);
+// 手機轉向或視窗大小改變時，即時再次檢查
+window.addEventListener('resize', checkOrientation);
 
 </script>
 </body>
