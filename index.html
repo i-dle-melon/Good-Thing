@@ -172,16 +172,37 @@
     50% { box-shadow: 0 4px 20px rgba(0, 205, 60, 0.6); border-color: rgba(0, 205, 60, 1); }
     100% { box-shadow: 0 4px 12px rgba(0, 205, 60, 0.2); border-color: rgba(0, 205, 60, 0.6); }
 }
+
+/* 引導圖片自適應縮放樣式 */
+.guide-img {
+    width: 30%;          /* 讓圖片寬度最大撐滿容器 */
+    max-width: 50px;        /* 限制最大寬度，避免在平板或大螢幕上突然變得太大 */
+    min-width: 30px;        /* 限制最小寬度，避免在極小的小手機上變太小看不清 */
+    height: auto;         /* 高度自動等比例縮放，防止圖片變形 */
+    display: block;       /* 消除圖片下方微小間隙 */
+    margin: 0 auto 15px auto;       /* 圖片水平置中 */
+    border-radius: 8px;   /* 可選：給圖片加點圓角，看起來更精緻 */
+}
+
+/* 微調原有的內容容器，確保完全置中 */
+.warning-content {
+    text-align: center;
+    padding: 20px;
+    width: 85%;           /* 限制提示內容不要貼緊手機邊緣 */
+    max-width: 400px;
+}
+
     </style>
 </head>
 <body>
 
 <div id="rotateWarning" class="orientation-warning">
     <div class="warning-content">
-        <span class="warning-icon">📱</span>
-        <p>為了獲得最佳的圖表使用體驗，建議將手機旋轉為<b>橫螢幕</b>觀看唷！</p>
+        <img src="https://i-dle-melon.github.io/My-Test/icon.png" alt="" class="guide-img">
+<p>為了獲得最佳的圖表使用體驗，建議將手機轉為<b>橫螢幕</b>使用唷！</p>
     </div>
 </div>
+
 
 <div class="container">
 
