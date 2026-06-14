@@ -19,59 +19,59 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-        /* 修改原本的 .song-card，增加 flex-direction */
-.song-card {
-    background: #1e1e1e;
-    color: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column; /* 改為垂直排列 */
-    align-items: flex-start; /* 靠左對齊 */
-    gap: 20px;
-}
+/* 修改原本的 .song-card，增加 flex-direction */
+        .song-card {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column; /* 改為垂直排列 */
+            align-items: stretch;
+            gap: 20px;
+        }
 
-.stats-container {
-    display: flex;
-    justify-content: space-between; /* 均分空間 */
-    width: 100%; /* 確保撐滿寬度 */
-    gap: 10px;
-}
+        /* 新增：專門管理歌名與右側圖片的橫向區塊 */
+        .song-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
 
-/* 手機版響應式優化 */
-@media (max-width: 600px) {
-    body { padding: 10px; }
-    
-    .song-card { padding: 15px; }
-    
-    .song-info h2 { font-size: 20px; }
-    
-    .stat-box {
-        text-align: center; /* 手機版改為置中更美觀 */
-    }
-    
-    .stat-box .value { font-size: 16px; }
-    .stat-box .label { font-size: 10px; }
-    
-    /* 隱藏圖表標題的長文字，避免破版 */
-    .chart-title { font-size: 14px; }
-    .btn { padding: 4px 8px; font-size: 10px; }
-}
+        .song-info h2 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+        }
 
-.song-info p {
-    margin: 0;
-    color: #aaa;
-    font-size: 14px;
-}
+        .song-info p {
+            margin: 0;
+            color: #aaa;
+            font-size: 14px;
+        }
 
-/* 新增：中間與右側數據區塊的統一容器 */
-.stats-container {
-    display: flex;
-    align-items: center;
-    gap: 30px; /* 每個方塊之間的間距 */
-}
+        /* 新增：歌曲封面圖片樣式 (長寬體、不切割) */
+        .song-cover {
+            width: 70%;
+            max-width: 1000px;
+            min-width: 100px;
+            height: 10%;
+            object-fit: contain;     /* 保持長寬比例，不切割圖片 */
+            border-radius: 6px;      /* 精緻微圓角 */
+            background-color: #2a2a2a; /* 圖片載入前或比例不符時的襯底背景 */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            flex-shrink: 0;          /* 防止圖片被擠壓變形 */
+            margin-left: 15px;
+        }
+        /* 新增：中間與右側數據區塊的統一容器 */
+        .stats-container {
+            display: flex;
+            justify-content: space-between; /* 均分空間 */
+            width: 100%; /* 確保撐滿寬度 */
+            gap: 10px;
+        }
 
 /* 數據方塊基本設計 */
 .stat-box {
@@ -161,6 +161,26 @@
     color: #00cd3c;
 }
 
+/* 手機版響應式優化 */
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    
+    .song-card { padding: 15px; }
+    
+    .song-info h2 { font-size: 20px; }
+    
+    .stat-box {
+        text-align: center; /* 手機版改為置中更美觀 */
+    }
+    
+    .stat-box .value { font-size: 16px; }
+    .stat-box .label { font-size: 10px; }
+    
+    /* 隱藏圖表標題的長文字，避免破版 */
+    .chart-title { font-size: 14px; }
+    .btn { padding: 4px 8px; font-size: 10px; }
+}
+
 /* 動態特效 */
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -191,15 +211,6 @@
     width: 85%;           /* 限制提示內容不要貼緊手機邊緣 */
     max-width: 400px;
 }
-.site-footer {
-            text-align: center;
-            padding: 30px 20px 10px 20px;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #666666;
-            letter-spacing: 0.5px;
-            border-top: 1px solid #1e1e1e;
-        }
 
     </style>
 </head>
@@ -222,9 +233,12 @@
 
     <div class="song-card">
     <div class="song-info">
+      <img src="https://i-dle-melon.github.io/Good-Thing/Good Thing.png"class="song-cover" alt="歌曲封面">
+      <div class="song-text">
         <h2 id="songTitle">Good Thing</h2>
         <p id="songArtist">i-dle*</p>
     </div>
+</div>
 
     <div class="stats-container">
         <div class="stat-box">
