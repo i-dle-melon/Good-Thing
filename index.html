@@ -76,16 +76,16 @@
         }
         /* 新增：歌曲封面圖片樣式 (長寬體、不切割) */
         .song-cover {
-            width: auto;
-            height: 10%;
-            max-height: 100px;
-            min-height: 10px;
+            width: 70%;
+            max-width: 500px;
+            min-width: 100px;
             object-fit: contain;     /* 保持長寬比例，不切割圖片 */
             border-radius: 6px;      /* 精緻微圓角 */
             background-color: #2a2a2a; /* 圖片載入前或比例不符時的襯底背景 */
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             flex-shrink: 0;          /* 防止圖片被擠壓變形 */
             margin-left: 15px;       /* 與左邊文字保持間距 */
+            margin-right: 15px;       /* 與右邊保持間距 */
         }
         /* 新增：中間與右側數據區塊的統一容器 */
         .stats-container {
